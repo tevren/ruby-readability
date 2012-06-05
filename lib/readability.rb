@@ -71,9 +71,9 @@ module Readability
       elements = content.css("img").map(&:attributes)
 
         elements.each do |element|
-          next unless element["src"]
+          next unless element["src"] || element["data-src"]
 
-          url     = element["src"].value
+          url     = element["src"].nil?  ?  element["data-src"].value : element["src"].value ## using data-src to retrieve links from imgur
           height  = element["height"].nil?  ? 0 : element["height"].value.to_i
           width   = element["width"].nil?   ? 0 : element["width"].value.to_i
           format  = File.extname(url).gsub(".", "")
